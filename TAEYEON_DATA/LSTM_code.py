@@ -1,6 +1,8 @@
 # %%
 #필요한 패키지 import > pip install tensorflow, pandas, numpy, matplotlib(시각화)
-#CSV 파일은 현재 github 내 old_kor.csv 불러오시면 됩니다. (아직 15-16, 17-18, 19-20으로만 분류되어 있음)
+#CSV 파일은 현재 github 내 old_kor_example.csv 불러오시면 됩니다. (아직 15-16, 17-18, 19-20으로만 분류되어 있음)
+#현재 LSTM 모델이 어떻게 돌아가는지 시험적으로 코드를 써본 것이기 때문에, 데이터 추가 구축 후 코드 수정하겠습니다.
+#데이터셋 분류 양 및 하이퍼파라미터 조정, 모델 성능평가 지표, 주석 역시 이후에 수정하겠습니다.
 import pandas as pd
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -8,7 +10,7 @@ import numpy as np
 
 #%%
 # 1. CSV 파일 로드 
-df = pd.read_csv('old_kor.csv')
+df = pd.read_csv('old_kor_example.csv')
 
 #%%
 # 2. 'content' 열 토큰화 (공백 기반 어절 split)
