@@ -15,7 +15,7 @@
   - 15세기: ‘아래아(ㆍ)’, 반치음(ㅿ) 존재
   - 16세기
   - 중기 (17~18세기)
-  - 후기 (19~20세기, 근대국어)
+  - 후기 (19~20세기 한글맞춤법통일안 이전, 근대국어)
 - **데이터 출처**:
   - 세종 말뭉치
 - **데이터 규모**:
@@ -26,6 +26,7 @@
 - Python 3.9
 - [OldHangeul](https://pypi.org/project/OldHangeul/) 패키지
 - 정규표현식 (정제 및 전처리)
+- [Tensorflow] LSTM 모델 사용 (https://github.com/keras-team/keras.git)
 - Git / GitHub
 
 ## 🗂️ 폴더 구조
