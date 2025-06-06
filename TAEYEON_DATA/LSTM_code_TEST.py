@@ -114,7 +114,8 @@ print(f"테스트 데이터 y_test shape: {y_test.shape}")
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout
 
-embedding_dim = 100 # 각 단어(어절)를 표현할 임베딩 벡터의 차원 (하이퍼파라미터, 50~300 사이에서 조절)
+embedding_dim = 30 # 각 단어(어절)를 표현할 임베딩 벡터의 차원 (하이퍼파라미터, 50~300 사이에서 조절)
+#현재 샘플 데이터의 크기가 딥러닝을 시도할 수 있을 만큼 크지 않아서 100->30으로 수정정
 
 model = Sequential() # 순차적으로 레이어를 쌓아 올리는 Keras 모델
 # Embedding Layer: 단어 인덱스를 저차원 밀집 벡터(임베딩)로 변환하는 역할
@@ -126,7 +127,8 @@ model.add(Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length
 # LSTM Layer: 시퀀스 데이터를 처리하고 장기 의존성을 학습
 # units: LSTM 셀의 출력 차원 (hidden state size), 모델의 '기억력'과 복잡도를 결정 (하이퍼파라미터, 64, 128, 256 등)
 # return_sequences=False: 분류 작업이므로 마지막 타임 스텝의 출력만 Dense Layer로 전달
-model.add(LSTM(units=128))
+model.add(LSTM(units=32)) 
+#마찬가지로 LSTM units도 128->32로 수정(너무 언더피팅되었다고 판단됨 오히려 모델 복잡도를 낮추는 게 답이 될 수도...)
 
 # Dropout Layer: 과적합(overfitting) 방지를 위해 무작위로 일부 뉴런을 비활성화
 # 0.5: 50%의 뉴런을 비활성화 (하이퍼파라미터, 0.2~0.5 사이에서 조절)
@@ -143,8 +145,15 @@ model.summary()
 #%%
 # 9. 모델 컴파일 
 # 모델 학습에 필요한 설정 (최적화 방법, 손실 함수, 평가 지표)
+
+import tensorflow as tf
+from tensorflow.keras.optimizers import Adam # 이 부분이 중요합니다.
+
+custom_adam_optimizer = Adam(learning_rate=0.00001) 
+#기본 learning_rate 0.001(기본값), 너무 가중치가 들쭉날쭉해서 학습율 줄여봄 -> 기본값이랑 차이가 X
+
 model.compile(
-    optimizer='adam', # 최적화 도구: Adam (가장 널리 사용되고 효과적)
+    optimizer=custom_adam_optimizer, # 최적화 도구: Adam (가장 널리 사용되고 효과적)
     loss='categorical_crossentropy', # 손실 함수: 다중 클래스 분류를 위한 교차 엔트로피 (원-핫 인코딩된 레이블 사용 시)
     metrics=['accuracy'] # 모델 성능 평가 지표: 정확도
 )
@@ -154,8 +163,8 @@ model.compile(
 # X_train과 y_train 데이터를 사용하여 모델 학습
 history = model.fit(
     X_train, y_train,
-    epochs=10, # 전체 훈련 데이터를 반복할 횟수 (하이퍼파라미터, 데이터 양에 따라 조절)
-    batch_size=32, # 한 번에 처리할 샘플의 개수 (하이퍼파라미터, GPU 메모리 및 학습 속도에 영향)
+    epochs=100, # 전체 훈련 데이터를 반복할 횟수 (하이퍼파라미터, 데이터 양에 따라 조절)
+    batch_size=18, # 한 번에 처리할 샘플의 개수 (하이퍼파라미터, GPU 메모리 및 학습 속도에 영향)
     validation_split=0.2, # 훈련 데이터 중 20%를 검증 데이터로 사용하여 학습 중 성능 모니터링
     verbose=1 # 학습 진행 상황을 자세히 출력 (0: 출력 없음, 1: 진행바, 2: 에포크마다 요약)
 )
