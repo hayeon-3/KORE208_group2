@@ -67,3 +67,9 @@ def process_old_hangeul_text(filepath, encoding='utf-8', save_units_path=None):
         "cleaned_str": output_str,
         "units": units,
     }
+
+result = process_old_hangeul_text(
+    '/Users/hayeon/KORE208/finalproject/15-16세기/16/A6CF0004(1517)-1.txt',
+    encoding='utf-8',
+    save_units_path='/Users/hayeon/KORE208/finalproject/15-16세기/16/cleaned_A6CF0004(1517)-1.txt'
+)
