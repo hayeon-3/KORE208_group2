@@ -96,11 +96,11 @@ y = labels_one_hot # 원-핫 인코딩된 타임라인 레이블 (모델 정답)
 from sklearn.model_selection import train_test_split
 
 # 데이터를 훈련 세트와 테스트 세트로 분할
-# test_size=0.2: 전체 데이터의 20%를 테스트 데이터로 사용
+# test_size=0.3: 전체 데이터의 30%를 테스트 데이터로 사용
 # random_state=42: 재현성을 위한 시드 (동일한 결과를 얻기 위해 고정)
 # stratify=y: y(레이블)의 비율을 훈련/테스트 세트에서 동일하게 유지 (클래스 불균형 방지)
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42, stratify=y
+    X, y, test_size=0.3, random_state=42, stratify=y
 )
 
 print(f"\n훈련 데이터 X_train shape: {X_train.shape}")
@@ -163,7 +163,7 @@ model.compile(
 # X_train과 y_train 데이터를 사용하여 모델 학습
 history = model.fit(
     X_train, y_train,
-    epochs=100, # 전체 훈련 데이터를 반복할 횟수 (하이퍼파라미터, 데이터 양에 따라 조절)
+    epochs=50, # 전체 훈련 데이터를 반복할 횟수 (하이퍼파라미터, 데이터 양에 따라 조절)
     batch_size=18, # 한 번에 처리할 샘플의 개수 (하이퍼파라미터, GPU 메모리 및 학습 속도에 영향)
     validation_split=0.2, # 훈련 데이터 중 20%를 검증 데이터로 사용하여 학습 중 성능 모니터링
     verbose=1 # 학습 진행 상황을 자세히 출력 (0: 출력 없음, 1: 진행바, 2: 에포크마다 요약)
@@ -222,4 +222,5 @@ for i in range(min(5, len(X_test))): # 첫 5개 샘플만 확인
     print(f"  실제 시대: {label_encoder.inverse_transform([true_classes[i]])[0]}")
     print(f"  예측 시대: {label_encoder.inverse_transform([predicted_classes[i]])[0]}")
     print("-" * 20)
+
 # %%
