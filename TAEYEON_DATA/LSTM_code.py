@@ -7,10 +7,15 @@ import pandas as pd
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np 
+#%%
+#(선택사항) 현재 작업경로 확인
+import os
+
+os.getcwd()
 
 #%%
 # 1. CSV 파일 로드 
-df = pd.read_csv('../old_kor_2.csv')
+df = pd.read_csv('../final_dataframe.csv')
 
 #%%
 # 2. 'content' 열 토큰화 (공백 기반 어절 split)

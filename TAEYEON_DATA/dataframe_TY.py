@@ -2,6 +2,7 @@
 import os
 import pandas as pd
 
+#%%
 def create_labeled_dataframe_from_nested_folders(base_master_folder_path):
     
     data = [] # 텍스트 내용과 라벨을 저장할 리스트
@@ -112,3 +113,5 @@ if __name__ == "__main__":
 
     machine_learning_df.to_csv(output_csv_path, index=False, encoding='utf-8')
     print(f"\n데이터 프레임이 '{output_csv_path}'에 CSV 파일로 저장되었습니다.")
+
+# %%
