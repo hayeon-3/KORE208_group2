@@ -45,3 +45,4 @@ result = count_jongseong_by_timeline(
 )
 
 print(result.head())
+
