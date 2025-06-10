@@ -24,8 +24,10 @@
 ## 🛠️ 사용 기술
 
 - Python 3.9
-- [OldHangeul](https://pypi.org/project/OldHangeul/) 패키지
-- 정규표현식 (정제 및 전처리)
+- 전처리
+  - [OldHangeul](https://pypi.org/project/OldHangeul/) 패키지
+  - 정규표현식
+  - [hanja](https://pypi.org/project/hanja/) 패키지
 - [Tensorflow] LSTM 모델 사용 (https://github.com/keras-team/keras.git)
 - Git / GitHub
 
