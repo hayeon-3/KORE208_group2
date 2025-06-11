@@ -37,8 +37,10 @@
 
 ## 🗂️ 폴더 구조
 - exercise_KORE208_group2
-    ㄴ final_LSTM.py
-    ㄴ final_dataframe.csv
+
+  ㄴ final_LSTM.py
+
+  ㄴ final_dataframe.csv
 
 ## 👥 팀원 소개
 
