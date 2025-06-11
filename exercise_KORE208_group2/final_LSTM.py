@@ -13,7 +13,7 @@ os.getcwd()
 
 # %%
 #필요한 패키지 import
-#CSV 파일은 현재 github 내 final_dataframe.csv 불러오시면 됩니다. (15C, 16C, mordern, enlightenment 시기구분 및 데이터 추가됨)
+#CSV 파일은 현재 github 내 final_dataframe.csv 불러오시면 됩니다.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -96,30 +96,32 @@ print(padded_sequences[:2])
 # 5. 타임라인 레이블 정수 인코딩
 # 현재 4개의 레이블: '15C', '16C', 'modern', 'enlightenmen'
 # 딥러닝 분류 모델의 출력 레이어에 One-Hot Encoding을 사용
+# 자동 지정시 알파벳 순이 Default이므로, 가독성을 위해 직접 시기순으로 지정 
 
-label_encoder = LabelEncoder()
-df['timeline_encoded'] = label_encoder.fit_transform(df['timeline'])
-num_classes = len(label_encoder.classes_) # 분류할 클래스 개수
+desired_timeline_order = ['15C', '16C', 'modern', 'enlightenment']
+
+df['timeline_encoded'] = pd.Categorical(df['timeline'], categories = desired_timeline_order, ordered = True)
+num_classes = len(desired_timeline_order) # 분류할 클래스 개수
 
 print(f"\n타임라인 레이블 및 인코딩:")
-for i, label in enumerate(label_encoder.classes_):
+for i, label in enumerate(desired_timeline_order):
     print(f"'{label}' -> {i}")
 print(f"총 분류 클래스 수: {num_classes}")
 print("\n인코딩된 타임라인 레이블 예시:")
 print(df[['timeline', 'timeline_encoded']].head())
 
 # 모델 입력 준비 완료:
-# X: padded_sequences (numpy 배열)
-# y: df['timeline_encoded'].values (numpy 배열)
+# X: padded_sequences 
+# y: df['timeline_encoded'].values 
 
 # %%
 # 6. 타임라인 레이블 원-핫 인코딩
 # 딥러닝 분류 모델의 출력 레이어에 사용될 원-핫 인코딩
 # 예: 0 -> [1, 0, 0], 1 -> [0, 1, 0], 2 -> [0, 0, 1]
 
-labels_one_hot = to_categorical(df['timeline_encoded'], num_classes=num_classes)
+labels_one_hot = pd.get_dummies(df['timeline_encoded'])
 
-print(f"\n원-핫 인코딩된 타임라인 레이블 예시:")
+print(f"\n원-핫 인코딩된 타임라인 레이블 예시 (순서 지정):")
 print(labels_one_hot[:5])
 
 #%%
@@ -256,8 +258,8 @@ for i in range(min(5, len(X_test))): # 첫 5개 샘플만 확인
     print(f"  실제 레이블 (인코딩): {true_classes[i]}")
     print(f"  예측 레이블 (인코딩): {predicted_classes[i]}")
     # 실제 레이블을 원래 문자열로 변환 (역변환)
-    print(f"  실제 시대: {label_encoder.inverse_transform([true_classes[i]])[0]}")
-    print(f"  예측 시대: {label_encoder.inverse_transform([predicted_classes[i]])[0]}")
+    print(f"  실제 시대: {desired_timeline_order[true_classes[i]]}")
+    print(f"  예측 시대: {desired_timeline_order[predicted_classes[i]]}")
     print("-" * 20)
 # %%
 # 14. 추가: Confusion Matrix로 test set accuracy 시각화
@@ -266,7 +268,7 @@ y_true = np.argmax(y_test, axis=1)
 y_pred_proba = model.predict(X_test)
 y_pred = np.argmax(y_pred_proba, axis=1)
 
-display_labels = ['15C', '16C', 'enlightenment', 'modern']
+display_labels = desired_timeline_order
 
 CM = confusion_matrix(y_true, y_pred)
 
@@ -285,3 +287,4 @@ plt.yticks(rotation=0)
 
 plt.tight_layout()
 plt.show()
+# %%
