@@ -19,7 +19,7 @@
 - **데이터 출처**:
   - 세종 말뭉치
 - **데이터 규모**:
-  - 전체 데이터 어절 수: 약 3,426,197어절
+  - 전체 데이터 어절 수: 약 3,426,197어절(375 instances)
     - 15세기: 840,504어절
     - 16세기: 233,170어절
     - 근대: 1,007,794어절
@@ -32,12 +32,13 @@
   - [OldHangeul](https://pypi.org/project/OldHangeul/) 패키지
   - 정규표현식
   - [hanja](https://pypi.org/project/hanja/) 패키지
-- [Tensorflow] LSTM 모델 사용 (https://github.com/keras-team/keras.git)
+- [Tensorflow](https://github.com/keras-team/keras.git) LSTM 모델 사용
 - Git / GitHub
 
 ## 🗂️ 폴더 구조
-- exercise_KORE208_group2 :
-- 
+- exercise_KORE208_group2
+    ㄴ final_LSTM.py
+    ㄴ final_dataframe.csv
 
 ## 👥 팀원 소개
 
