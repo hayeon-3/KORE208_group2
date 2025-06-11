@@ -1,8 +1,9 @@
+#%%
 import pandas as pd
 from collections import Counter
 
 # 파일 불러오기
-df = pd.read_csv("TAEYEON_DATA/final_dataframe.csv", encoding='utf-8-sig')
+df = pd.read_csv('/Users/hayeon/KORE208/finalproject/exercise_KORE208_group2/final_dataframe.csv')
 
 # 문자 그룹 정의
 b_chars = ['ᄈ', 'ᄣ', 'ᄤ', 'ᄥ', 'ᄦ', 'ᆲ', 'ᆹ']
@@ -34,11 +35,16 @@ for timeline, group in df.groupby('timeline'):
 
     rows.append(row)
 
-# DataFrame 생성
-result_df = pd.DataFrame(rows).sort_values(by='timeline')
+#결과 DataFrame 생성 / 순서정렬 유지
+result_df = pd.DataFrame(rows)
+original_order = df['timeline'].drop_duplicates().tolist()
+result_df['timeline'] = pd.Categorical(result_df['timeline'], categories=original_order, ordered=True)
+result_df = result_df.sort_values(by='timeline')
 
 # 저장
-result_df.to_csv("HAYEON_data/char_count_17.csv", index=False, encoding='utf-8-sig')
+result_df.to_csv("char_count_17.csv", index=False, encoding='utf-8-sig')
 
 # 확인
 print(result_df.head())
+
+# %%
